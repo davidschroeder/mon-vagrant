@@ -13,18 +13,9 @@ execute "sed -i.bak2 's^\\(admin_token = \\).*^\\1#{admin_token}^' #{ks_conf}"
 # ...set endpoints that other mini-mon nodes can use
 execute "sed -i.bak3 's^\\(.*endpoint = http://\\).*\\(:.*\\)^\\1#{my_ip}\\2^' #{ks_conf}"
 
-
-# Regular devstack relies on a user manually running "rejoin-stack.sh" which
-# fires up a bunch of screen sessions, one for each process.  We don't really
-# want that here.  Instead autostack.sh will create upstart scripts for each
-# devstack process, sendnig its output to real log files under /var/log/. 
-cookbook_file "autostack.sh" do
-    mode 0755
-    owner "vagrant"
-    path "/home/vagrant/devstack/autostack.sh"
-    action :create_if_missing
+# Restart the keystone process to apply the above changes
+service "keystone-all" do
+    provider Chef::Provider::Service::Upstart
+    action :restart
 end
-
-execute "/home/vagrant/devstack/autostack.sh"
-
 
