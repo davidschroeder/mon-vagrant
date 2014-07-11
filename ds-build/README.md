@@ -1,5 +1,5 @@
 The ds-build Vagrant profile installs the latest DevStack onto an Ubuntu
-Precise virtual machine, activating extra services and setting it up to
+Trusty virtual machine, activating extra services and setting it up to
 run out of Upstart rather than screen sessions.
 
 Default admin credentials are username `admin` and password `admin`.
