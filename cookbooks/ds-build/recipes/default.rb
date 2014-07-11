@@ -6,6 +6,11 @@ package 'git' do
     action :install
 end
 
+# Remove apt proxy (populated by default in ubuntu/trusty64)
+file "/etc/apt/apt.conf.d/01proxy" do
+    action :delete
+end
+
 # Load up devstack configuration and installer script
 cookbook_file "local.conf" do
     mode 0755
